@@ -6,8 +6,9 @@
   "homepage": "https://omsingh5092.github.io",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build && node -e \"const fs=require('fs'); if(fs.existsSync('.nojekyll')) fs.copyFileSync('.nojekyll','docs/.nojekyll');\"",
+    "preview": "vite preview",
+    "build:docs": "npm run build"
   },
   "dependencies": {
     "react": "^19.0.0",
