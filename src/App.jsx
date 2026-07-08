@@ -21,52 +21,66 @@ const metrics = [
   { value: "50+", label: "on-call engineers supported by internal tooling" },
 ];
 
+const focusKeywords = [
+  "Distributed Systems",
+  "Backend Engineering",
+  "Cloud Infrastructure",
+  "Reliability & Scale",
+  "Kubernetes",
+  "Containers",
+  "Java",
+  "Go",
+];
+
 const experiences = [
   {
-    role: "IC3 Software Engineer II",
+    role: "Software Engineer II (IC3)",
     company: "Microsoft Azure",
     dates: "Feb 2026 - Present",
     location: "Bengaluru",
-    intro: "Working on Azure Edge and hybrid cloud platforms for enterprise workloads.",
+    intro: "Building scalable, reliable hybrid cloud infrastructure in the Azure Edge organization, spanning Azure Local and Azure Nexus.",
     highlights: [
-      "Architected and developed a simulated storage appliance solution that reduced infrastructure resource cost by 80% for development and testing workflows.",
-      "Focused on high-availability hybrid cloud capabilities and more efficient platform validation loops.",
+      "Architected a simulated storage appliance solution that cut infrastructure resource cost by 80%, dramatically accelerating development and test loops for hybrid cloud workloads.",
+      "Leading security-enhancement initiatives that improved the robustness, maintainability, and hardening posture of the Azure Local storage platform.",
+      "Focused on high-availability, on-prem cloud capabilities that let enterprise workloads run reliably at the edge.",
     ],
   },
   {
-    role: "IC3 Senior MTS",
+    role: "Senior Member of Technical Staff (IC3)",
     company: "Oracle Cloud Infrastructure",
     dates: "Sep 2025 - Feb 2026",
     location: "Bengaluru",
-    intro: "Built and optimized OCI Container Instances, a serverless container platform for scalable cloud workloads.",
+    intro: "Built and optimized OCI Container Instances, a serverless compute platform delivering reliable, highly scalable container workloads.",
     highlights: [
-      "Tuned distributed workload placement algorithms in Java, reducing container instance creation latency by 30% under bursty traffic.",
-      "Integrated centralized audit logging for privileged kernel actions across 500+ bare-metal hosts in 100+ availability domains.",
+      "Tuned distributed workload-placement algorithms in Java, reducing container instance creation latency by 30% and boosting throughput under bursty traffic.",
+      "Architected a centralized audit-logging service for privileged kernel actions across 500+ bare-metal hosts in 100+ availability domains, enabling traceability and compliance.",
     ],
   },
   {
     role: "Member of Technical Staff",
     company: "Oracle Cloud Infrastructure",
-    dates: "Bengaluru",
-    location: "",
+    dates: "Jul 2022 - Sep 2025",
+    location: "Bengaluru",
     intro: "Delivered control-plane services, Kubernetes-compatible platform features, and bare-metal capacity enablement.",
     highlights: [
       "Automated large-scale customer workload migrations across 100+ global datacenters with 10-minute p99 downtime per workload.",
       "Delivered container metrics collection for OCI Monitoring, Kubernetes HPA support, custom autoscalers, and termination grace periods.",
       "Led ARM hypervisor enablement for auto-scaling and bin-packing AArch64 bare-metal capacity across 40+ regions.",
       "Designed anomaly-resolution workflows that reduced incidents for targeted resource-state issues by 80%.",
+      "Onboarded next-gen x86 bare-metal instances across the Java control plane and API gateway, validating a 33% per-core performance uplift.",
       "Built Terraform and OCI API automation for auto-scaling instance pools and multi-architecture clusters, reducing cost per CPU by 40%.",
+      "Built an internal React dashboard for real-time service state visibility, improving response times for 50+ on-call engineers.",
     ],
   },
   {
     role: "Software Engineering Intern",
     company: "Oracle Cloud Infrastructure",
-    dates: "Remote",
-    location: "",
+    dates: "May 2021 - Jul 2021",
+    location: "Remote",
     intro: "Worked on OCI Service Mesh, Oracle's cloud-native service mesh offering.",
     highlights: [
       "Developed a Bookinfo-style microservices demo used by 100+ developers onboarding to OCI Service Mesh.",
-      "Built Cloud Console UI with internal React toolchains for customers managing service mesh resources.",
+      "Built Cloud Console UI with internal React toolchains, serving 1000+ customers managing service mesh resources.",
     ],
   },
 ];
@@ -83,6 +97,10 @@ const skillGroups = [
   {
     title: "Application Platforms",
     items: ["Dropwizard", "gRPC", "REST", "React", "Node.js"],
+  },
+  {
+    title: "Databases",
+    items: ["PostgreSQL", "Oracle Autonomous DB", "MongoDB", "Berkeley DB"],
   },
 ];
 
@@ -186,16 +204,29 @@ function Hero() {
             <img src="/ProfilePhoto.jpg" alt="Om Singh" className="hero-photo" />
           </div>
           <div>
-            <span className="eyebrow">Software Engineer - Bengaluru, India</span>
+            <span className="eyebrow">
+              <span className="status-dot" aria-hidden="true" />
+              Software Engineer II @ Microsoft Azure &middot; Ex-Oracle Cloud
+            </span>
             <h1>Om Singh</h1>
-            <p className="hero-subtitle">Building reliable infrastructure for hyperscalers</p>
+            <p className="hero-subtitle">I build reliable, highly scalable compute and cloud-infrastructure platforms.</p>
           </div>
         </div>
         <p className="lead">
-          I am a backend and cloud infrastructure engineer with deep experience building scalable applications on
-          Oracle Cloud Infrastructure and Microsoft Azure Edge. My work spans distributed control planes, container
-          platforms, Kubernetes-compatible features, bare-metal capacity, observability, and developer tooling.
+          Backend and cloud-infrastructure engineer focused on distributed systems, reliability, and scale. At
+          <strong> Microsoft Azure</strong> I work in the Azure Edge organization on hybrid cloud infrastructure across
+          <strong> Azure Local</strong> and <strong>Azure Nexus</strong>; previously at <strong>Oracle Cloud</strong> I
+          built the Container Instances serverless compute platform. My work spans distributed control planes, container
+          and Kubernetes-compatible platforms, bare-metal capacity, security hardening, observability, and developer
+          tooling.
         </p>
+        <div className="keyword-strip" aria-label="Focus areas">
+          {focusKeywords.map((keyword) => (
+            <span className="keyword-chip" key={keyword}>
+              {keyword}
+            </span>
+          ))}
+        </div>
         <div className="actions">
           {actions.map((action) => (
             <a className={action.primary ? "button primary" : "button"} href={action.href} key={action.href}>
@@ -206,8 +237,12 @@ function Hero() {
       </div>
 
       <aside className="profile-card animated-card" aria-label="Profile highlights">
-        <h3 className="profile-card-title">Containers, Kubernetes, Orchestration</h3>
-        <p>Seasoned engineer experienced in working on high throughput low latency systems at cloud hyperscalers.</p>
+        <span className="profile-card-tag">Currently building</span>
+        <h3 className="profile-card-title">Reliable, scalable compute platforms</h3>
+        <p>
+          Hybrid cloud infrastructure at Azure Edge today; serverless container compute at OCI before that. Motivated by
+          scalability, reliability, and security in cloud-native environments.
+        </p>
         <div className="brand-grid">
           <div className="brand-pill">
             <MicrosoftIcon />
@@ -235,13 +270,18 @@ function Experience() {
   return (
     <section className="section animated-section" id="experience">
       <SectionHeading title="Experience">
-        Recent work across hybrid cloud, Oracle Cloud container infrastructure, service mesh, migrations, and
-        operational tooling.
+        Building reliable, highly scalable compute and cloud-infrastructure platforms - today at Microsoft Azure Edge,
+        previously across Oracle Cloud Container Instances, control-plane services, migrations, and bare-metal
+        enablement.
       </SectionHeading>
 
       <div className="experience-list timeline">
-        {experiences.map((experience) => (
-          <article className="experience-card animated-card" key={`${experience.company}-${experience.role}`}>
+        {experiences.map((experience, index) => (
+          <article
+            className="experience-card animated-card reveal-up"
+            style={{ "--i": index }}
+            key={`${experience.company}-${experience.role}`}
+          >
             <div className="experience-meta">
               <div className="company-icon-wrap">
                 <CompanyIcon company={experience.company} />
@@ -271,13 +311,13 @@ function Skills() {
   return (
     <section className="section animated-section" id="skills">
       <SectionHeading title="Skills">
-        I work closest to backend systems and cloud platforms, with enough frontend experience to build internal tools
-        that operators actually use.
+        Backend systems and cloud infrastructure at the core - distributed systems, containers, and Kubernetes - with
+        enough frontend depth to ship the internal tools operators rely on.
       </SectionHeading>
 
       <div className="card-grid">
-        {skillGroups.map((group) => (
-          <article className="card animated-card" key={group.title}>
+        {skillGroups.map((group, index) => (
+          <article className="card animated-card reveal-up" style={{ "--i": index }} key={group.title}>
             <h3>{group.title}</h3>
             <div className="tags">
               {group.items.map((item) => (
@@ -301,15 +341,15 @@ function Education() {
       </SectionHeading>
 
       <div className="split">
-        <article className="card animated-card">
+        <article className="card animated-card reveal-left">
           <h3>Bachelor of Technology</h3>
-          <p className="meta">NIT Allahabad - Electronics and Communication Engineering - CGPA 9.25</p>
+          <p className="meta">Motilal Nehru National Institute of Technology (NIT Allahabad) - Electronics and Communication Engineering - CGPA 9.25</p>
           <ul>
             <li>Android Development Lead at Coding Club, mentoring juniors and running technical events.</li>
             <li>Core member of the Music Committee, organizing cultural events and mentoring performers.</li>
           </ul>
         </article>
-        <article className="card animated-card">
+        <article className="card animated-card reveal-right">
           <h3>Accomplishments</h3>
           <ul>
             <li>
@@ -332,19 +372,19 @@ function Contact() {
         snapshots from where the engineering trail started.
       </SectionHeading>
       <div className="contact-grid">
-        <a className="contact-card" href="mailto:omsingh6903@gmail.com">
+        <a className="contact-card animated-card reveal-up" style={{ "--i": 0 }} href="mailto:omsingh6903@gmail.com">
           <EmailIcon />
           <span>omsingh6903@gmail.com</span>
         </a>
-        <a className="contact-card" href="tel:+916388639626">
+        <a className="contact-card animated-card reveal-up" style={{ "--i": 1 }} href="tel:+916388639626">
           <PhoneIcon />
           <span>+91 6388639626</span>
         </a>
-        <a className="contact-card" href="https://www.linkedin.com/in/om-singh-5092/" target="_blank" rel="noreferrer">
+        <a className="contact-card animated-card reveal-up" style={{ "--i": 2 }} href="https://www.linkedin.com/in/om-singh-5092/" target="_blank" rel="noreferrer">
           <LinkedInIcon />
           <span>LinkedIn</span>
         </a>
-        <a className="contact-card" href="https://github.com/OmSingh5092" target="_blank" rel="noreferrer">
+        <a className="contact-card animated-card reveal-up" style={{ "--i": 3 }} href="https://github.com/OmSingh5092" target="_blank" rel="noreferrer">
           <GitHubIcon />
           <span>GitHub</span>
         </a>
@@ -355,18 +395,27 @@ function Contact() {
 
 export default function App() {
   useEffect(() => {
+    const nodes = document.querySelectorAll(".animated-section, .animated-card, .experience-card");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      nodes.forEach((node) => node.classList.add("visible"));
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          entry.target.classList.toggle("visible", entry.isIntersecting);
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
         });
       },
-      { threshold: 0.18 }
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
     );
 
-    document.querySelectorAll(".animated-section, .animated-card, .experience-card").forEach((node) => {
-      observer.observe(node);
-    });
+    nodes.forEach((node) => observer.observe(node));
 
     return () => observer.disconnect();
   }, []);
