@@ -1,3 +1,6 @@
 node_modules/
 dist/
 npm-debug.log*
+*~RF*.TMP
+*.Zone.Identifier
+*:Zone.Identifier
