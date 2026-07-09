@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
   { label: "Experience", href: "#experience" },
@@ -105,15 +105,82 @@ const skillGroups = [
 ];
 
 function Header() {
+  const [activeHref, setActiveHref] = useState("");
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
+  const listRef = useRef(null);
+  const linkRefs = useRef({});
+
+  useEffect(() => {
+    const sectionIds = ["home", ...links.map((link) => link.href.slice(1))];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    if (!sections.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length) {
+          setActiveHref(`#${visible[0].target.id}`);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const list = listRef.current;
+      const el = linkRefs.current[activeHref];
+      if (!list || !el) {
+        setIndicator((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+      const listRect = list.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      setIndicator({
+        left: elRect.left - listRect.left,
+        width: elRect.width,
+        visible: true,
+      });
+    };
+
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [activeHref]);
+
   return (
     <header className="site-header">
       <nav className="nav" aria-label="Primary navigation">
         <a className="brand" href="#home">
           Om Singh
         </a>
-        <div className="nav-links">
+        <div className="nav-links" ref={listRef}>
+          <span
+            className="nav-indicator"
+            aria-hidden="true"
+            style={{
+              transform: `translateX(${indicator.left}px)`,
+              width: `${indicator.width}px`,
+              opacity: indicator.visible ? 1 : 0,
+            }}
+          />
           {links.map((link) => (
-            <a key={link.href} href={link.href}>
+            <a
+              key={link.href}
+              href={link.href}
+              ref={(node) => {
+                linkRefs.current[link.href] = node;
+              }}
+              className={activeHref === link.href ? "is-active" : ""}
+              aria-current={activeHref === link.href ? "page" : undefined}
+            >
               {link.label}
             </a>
           ))}
